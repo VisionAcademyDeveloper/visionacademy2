@@ -48,9 +48,9 @@ class RegisterController extends Controller
                     ],
                 ]);
 
+                broadcast(new NewUserHasRegisteredEvent($user));
 
                 event(new NewUserHasRegisteredEvent($user));
-
 
                 return Response::json([
                     'success' => true,
