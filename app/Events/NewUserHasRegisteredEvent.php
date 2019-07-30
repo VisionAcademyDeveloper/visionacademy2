@@ -35,4 +35,11 @@ class NewUserHasRegisteredEvent implements ShouldBroadcast
     {
         return new Channel('new-user');
     }
+
+
+
+    public function broadcastAs()
+    {
+        return 'NewUserHasRegisteredEvent';
+    }
 }
