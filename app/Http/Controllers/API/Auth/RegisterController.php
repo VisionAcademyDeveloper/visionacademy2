@@ -9,7 +9,7 @@ use App\User;
 use App\Profile;
 use GuzzleHttp;
 use App\Events\NewUserHasRegisteredEvent;
-use MyEvent;
+
 
 class RegisterController extends Controller
 {
@@ -48,8 +48,9 @@ class RegisterController extends Controller
                     ],
                 ]);
 
-                event(new MyEvent('hello world'));
+               
 
+                event(new NewUserHasRegisteredEvent($user));
 
                 return Response::json([
                     'success' => true,
