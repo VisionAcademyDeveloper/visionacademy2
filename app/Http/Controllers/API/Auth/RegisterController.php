@@ -52,9 +52,6 @@ class RegisterController extends Controller
                 event(new NewUserHasRegisteredEvent($user));
 
 
-              
-
-
                 return Response::json([
                     'success' => true,
                     'message' => 'Your account has been created successfully!',

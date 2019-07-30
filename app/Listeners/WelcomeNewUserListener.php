@@ -4,10 +4,9 @@ namespace App\Listeners;
 
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Mail\WelcomeNewUserMail;
-use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendWelcomeEmailJob;
 
-class WelcomeNewUserListener
+class WelcomeNewUserListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -27,6 +26,8 @@ class WelcomeNewUserListener
      */
     public function handle($event)
     {
-        Mail::to('it676@hotmail.com')->send(new WelcomeNewUserMail($event->user));
+       
+        dispatch(new SendWelcomeEmailJob($event->user));
+        
     }
 }

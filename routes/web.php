@@ -1,4 +1,7 @@
 <?php
+use App\Events\NewUserHasRegisteredEvent;
+use App\Jobs\SendWelcomeEmailJob;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +15,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   
+
+    $user = User::where('id', 1)->first();
+   
+    dispatch(new SendWelcomeEmailJob($user));
+    return "hi";
 });
 
 Auth::routes();
