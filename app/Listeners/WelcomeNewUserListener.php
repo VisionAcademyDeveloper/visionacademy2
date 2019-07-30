@@ -27,6 +27,6 @@ class WelcomeNewUserListener
      */
     public function handle($event)
     {
-        Mail::to('visionacademydeveloper@gmail.com')->send(new WelcomeNewUserMail($event->user));
+        Mail::to('it676@hotmail.com')->send(new WelcomeNewUserMail($event->user));
     }
 }
