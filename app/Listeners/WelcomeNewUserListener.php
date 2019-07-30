@@ -26,8 +26,7 @@ class WelcomeNewUserListener implements ShouldQueue
      */
     public function handle($event)
     {
-       
-        dispatch(new SendWelcomeEmailJob($event->user));
-        
+        dispatch(new SendWelcomeEmailJob($event->user))
+            ->delay(now()->addSeconds(10));
     }
 }
