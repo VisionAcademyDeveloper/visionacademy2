@@ -22,7 +22,7 @@ class LoginController extends Controller
 
         if (!Auth::attempt($credentials)) {
             return Response::json([
-                'status' => 'error',
+                'success' => false,
                 'message' => 'Invalid credentials, please try again.'
             ], 401);
         }
@@ -40,9 +40,9 @@ class LoginController extends Controller
         ]);
 
         return Response::json([
-            'status' => 'success',
+            'success' => true,
             'message' => 'You have logged in successfully!',
-            'data' => json_decode((string) $response->getBody(), true)
+            'token_data' => json_decode((string) $response->getBody(), true)
         ], 200);
     }
 }
