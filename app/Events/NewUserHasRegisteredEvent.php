@@ -1,45 +1,28 @@
 <?php
 
-namespace App\Events;
+use IlluminateQueueSerializesModels;
+use IlluminateFoundationEventsDispatchable;
+use IlluminateBroadcastingInteractsWithSockets;
+use IlluminateContractsBroadcastingShouldBroadcast;
 
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-
-class NewUserHasRegisteredEvent implements ShouldBroadcast
+class MyEvent implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+  use Dispatchable, InteractsWithSockets, SerializesModels;
 
+  public $message;
 
-    public $user;
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct($user)
-    {
-        $this->user = $user;
-    }
+  public function __construct($message)
+  {
+      $this->message = $message;
+  }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new Channel('new-user');
-    }
+  public function broadcastOn()
+  {
+      return ['my-channel'];
+  }
 
-
-
-    public function broadcastAs()
-    {
-        return 'NewUserHasRegisteredEvent';
-    }
+  public function broadcastAs()
+  {
+      return 'my-event';
+  }
 }
