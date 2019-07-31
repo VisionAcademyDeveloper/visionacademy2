@@ -5,27 +5,34 @@ namespace App\Http\Controllers\API\Department;
 use App\Http\Controllers\Controller;
 use App\Department;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
     public function getAllDepartments()
     {
+
         $departments = Department::OrderBy('id', 'asc')->get();
-        return Response::json($departments);
+        return Response::json([
+            'success' => true,
+            'message' => 'All departments returned successfully.',
+            'departments' => $departments
+        ], 200);
     }
 
-    public static  function getDepartment(Request $request)
+    public static  function getDepartment($id)
     {
-        $request->validate([
-            'department_id' => 'required|numeric',
-        ]);
-        $department = Department::find($request->department_id);
+        $id = (int) $id;
+
+        $department = Department::find($id);
         if ($department == null)
             return Response::json([
-                'status' => 'error',
+                'success' => false,
                 'message' => 'The required department not found!'
-            ]);
-        return Response::json($department);
+            ], 404);
+        return  Response::json([
+            'success' => true,
+            'message' => 'The required university returned successfully!',
+            'department' => $department
+        ], 200);
     }
 }

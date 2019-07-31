@@ -16,10 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api', 'roles:admin|teacher')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
@@ -57,7 +53,6 @@ Route::get('/department/{id}', 'API\Department\DepartmentController@getDepartmen
 */
 
 Route::group(['prefix' => 'course'], function () {
-
-    Route::middleware('auth:api')->post('/create', 'API\Course\CourseController@create');
+    Route::middleware('auth:api', 'roles:teacher')->post('/create', 'API\Course\CourseController@create');
     Route::post('course/create', 'API\Course\CourseController@create')->name('teacher.course.create');
 });
