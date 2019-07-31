@@ -13,5 +13,6 @@ class RolePolicy
     public function isTeacher(User $user)
     {
         return $user->user_type == 'teacher';
+        // return false;
     }
 }

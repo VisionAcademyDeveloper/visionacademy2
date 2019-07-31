@@ -1,4 +1,5 @@
 <?php
+
 use App\Events\NewUserHasRegisteredEvent;
 use App\Jobs\SendWelcomeEmailJob;
 use App\User;
@@ -15,16 +16,14 @@ use App\User;
 */
 
 Route::get('/', function () {
-   
-
-    $user = User::where('id', 1)->first();
-   
-    dispatch(new SendWelcomeEmailJob($user));
-    return "hi";
-});
 
 
-Route::get('/pusher',function(){
+
+    return 'hi';
+})->middleware('roles:admin');
+
+
+Route::get('/pusher', function () {
 
     return view('pusher');
 });

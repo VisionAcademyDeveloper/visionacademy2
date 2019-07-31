@@ -38,6 +38,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public function courses()
     {
         return $this->hasMany(Course::class);
@@ -46,5 +53,18 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+
+
+    public function hasAnyRole($roles)
+    {
+        if (!is_array($roles)) {
+            $roles = [$roles];
+        }
+        if ($this->roles()->whereIn('name', $roles)->first()) {
+            return true;
+        }
+        return false;
     }
 }

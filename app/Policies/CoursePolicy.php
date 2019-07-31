@@ -42,7 +42,7 @@ class CoursePolicy
     public function create(User $user)
     {
 
-        return $user->user_type == 'teacher';
+        return 1 == 1;
     }
 
     /**

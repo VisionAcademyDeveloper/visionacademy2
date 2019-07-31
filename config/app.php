@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://VisionAcademy.online'),
+    'url' => env('APP_URL', 'http://127.0.0.1'),
 
     'asset_url' => env('ASSET_URL', null),
 

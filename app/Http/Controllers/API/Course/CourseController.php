@@ -12,8 +12,11 @@ use Intervention\Image\Facades\Image;
 class CourseController extends Controller
 {
 
+
+
     public function create(Request $request)
     {
+
         if (!Gate::allows('teacher-only')) {
             return Response::json([
                 'success' => false,

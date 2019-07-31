@@ -16,16 +16,22 @@ class DepartmentsTableSeeder extends Seeder
                 'acronym' => 'CS',
                 'name' => 'Computer Science',
                 'logo_url' => 'cs.png',
-            ],
+            ]
+        );
+
+        DB::table('departments')->insert(
             [
                 'acronym' => 'IS',
-                'name' => 'Information Systems',
-                'logo_url' => 'IS.png',
-            ],
+                'name' => 'Computer Science',
+                'logo_url' => 'is.png',
+            ]
+        );
+
+        DB::table('departments')->insert(
             [
                 'acronym' => 'Math',
                 'name' => 'Mathmatics',
-                'logo_url' => 'Math.png',
+                'logo_url' => 'math.png',
             ]
         );
     }
