@@ -52,4 +52,45 @@ class CourseController extends Controller
             ], 201);
         }
     }
+
+
+    public function getAllCourses()
+    {
+        $courses = Course::where('display', 1)->get();
+        return Response::json([
+            'success' => true,
+            'message' => 'courses returned successfully.',
+            'total' => $courses->count(),
+            'courses' => $courses,
+        ], 200);
+    }
+
+    public function getCoursesByDepartment($id)
+    {
+        $courses = Course::where('display', 1)->where('department_id', $id)->get();
+        return Response::json([
+            'success' => true,
+            'message' => 'courses returned successfully.',
+            'total' => $courses->count(),
+            'courses' => $courses,
+
+        ], 200);
+    }
+
+    public function getCourse($id)
+    {
+        $course = Course::where('id', $id)->where('display', 1)->first();
+        if ($course) {
+            return Response::json([
+                'success' => true,
+                'message' => 'course returned successfully.',
+                'course' => $course,
+            ], 200);
+        }
+
+        return Response::json([
+            'success' => false,
+            'message' => 'course not found',
+        ], 404);
+    }
 }

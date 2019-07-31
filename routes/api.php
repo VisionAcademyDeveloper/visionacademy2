@@ -52,7 +52,12 @@ Route::get('/department/{id}', 'API\Department\DepartmentController@getDepartmen
 |--------------------------------------------------------------------------
 */
 
-Route::group(['prefix' => 'course'], function () {
-    Route::middleware('auth:api', 'roles:teacher')->post('/create', 'API\Course\CourseController@create');
-    Route::post('course/create', 'API\Course\CourseController@create')->name('teacher.course.create');
+Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
+
+    Route::post('/course', 'API\Course\CourseController@create')->name('course.post');
+    Route::put('/course/{id}/edit', 'API\Course\CourseController@update')->name('course.update');
 });
+
+Route::get('/course/all', 'API\Course\CourseController@getAllCourses')->name('course.getAll');
+Route::get('/course/{id}', 'API\Course\CourseController@getCourse')->name('course.get');
+Route::get('/department/{id}/courses', 'API\Course\CourseController@getCoursesByDepartment')->name('course.getByDep');
