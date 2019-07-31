@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         Course::class => CoursePolicy::class,
         Chapter::class => ChapterPolicy::class,
         Role::class => RolePolicy::class,
-       
+
 
     ];
 
@@ -37,8 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Passport::routes();
 
-        Gate::define('teacher-only', 'App\Policies\RolePolicy@isTeacher');
-        Gate::define('create-course', 'App\Policies\CoursePolicy@create');
+        Gate::define('update-course', 'App\Policies\CoursePolicy@update');
+        Gate::define('delete-course', 'App\Policies\CoursePolicy@delete');
         Gate::define('add-chapter', 'App\Policies\ChapterPolicy@addChapter');
 
         //

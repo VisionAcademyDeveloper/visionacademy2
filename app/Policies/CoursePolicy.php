@@ -10,40 +10,6 @@ class CoursePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any courses.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the course.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Course  $course
-     * @return mixed
-     */
-    public function view(User $user, Course $course)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create courses.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-
-        return 1 == 1;
-    }
 
     /**
      * Determine whether the user can update the course.
@@ -54,7 +20,8 @@ class CoursePolicy
      */
     public function update(User $user, Course $course)
     {
-        //
+
+        return $user->id === $course->user_id;
     }
 
     /**
@@ -66,7 +33,7 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course)
     {
-        //
+        return $user->id === $course->user_id;
     }
 
     /**

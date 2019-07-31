@@ -7,28 +7,19 @@ use App\Http\Controllers\Controller;
 use App\Course;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
 
     public function create(Request $request)
     {
-        $request->validate([
-            'university_id' => 'required|numeric',
-            'department_id' => 'required|numeric',
-            'name' => 'required|min:3:max:250',
-            'price' => 'required|numeric',
-            'description' => 'required',
-            'logo_url' => 'required|file|image|max:1000',
-        ]);
 
-        $logo = 'https://vsionacademy.online/logo.png';
-        if ($request->hasFile('logo_url')) {
-            $logo = $request->file('logo_url')->store('uploads/courses_logos', 'public');
-            $image = Image::make(public_path('storage/' . $logo))->fit(400, 400);
-            $image->save();
-        }
+        $this->validateRequest();
 
+        // $image = Image::make(public_path('storage/' . $logo))->fit(400, 400);
+        // $image->save();
+        //Job for resizing image
         $course = new Course([
             'university_id' => $request->input('university_id'),
             'department_id' => $request->input('department_id'),
@@ -36,7 +27,6 @@ class CourseController extends Controller
             'price' => $request->input('price'),
             'old_price' => $request->input('old_price'),
             'description' => $request->input('description'),
-            'logo_url' => $logo,
             'preview_url' => $request->input('preview_url'),
             'prerequisites' => $request->input('prerequisites'),
             'classLink' => $request->input('classLink'),
@@ -44,7 +34,7 @@ class CourseController extends Controller
         ]);
 
         if ($request->user()->courses()->save($course)) {
-
+            $this->storeLogo($course);
             return Response::json([
                 'success' => true,
                 'message' => 'Your course has been created successfully!',
@@ -92,5 +82,95 @@ class CourseController extends Controller
             'success' => false,
             'message' => 'course not found',
         ], 404);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $course = Course::where('id', $id)->where('display', 1)->first();
+
+        if ($course) {
+
+            if (!Gate::allows('update-course', $course)) {
+                return Response::json([
+                    'success' => false,
+                    'message' => "You don't have the right permission to perform this action."
+                ], 401);
+            }
+            $this->validateRequest();
+
+            $course->university_id = $request->input('university_id');
+            $course->department_id = $request->input('department_id');
+            $course->name = $request->input('name');
+            $course->price = $request->input('price');
+            $course->old_price = $request->input('old_price');
+            $course->description = $request->input('description');
+            $course->preview_url = $request->input('preview_url');
+            $course->prerequisites = $request->input('prerequisites');
+            $course->classLink = $request->input('classLink');
+            $course->classTableInfo = $request->input('classTableInfo');
+            $course->update();
+
+            $this->storeLogo($course);
+
+            return Response::json([
+                'success' => true,
+                'message' => 'Your course has been updated successfully!',
+                'course' => $course,
+            ], 200);
+        }
+
+        return Response::json([
+            'success' => false,
+            'message' => 'The required course not found!',
+        ], 404);
+    }
+
+    public function delete($id)
+    {
+        $course = Course::where('id', $id)->where('display', 1)->first();
+
+        if ($course) {
+
+            if (!Gate::allows('delete-course', $course)) {
+                return Response::json([
+                    'success' => false,
+                    'message' => "You don't have the right permission to perform this action."
+                ], 401);
+            }
+
+            $course->display = 0; //the teacher can't delete the course permanently but hide it.
+            $course->save();
+
+            return Response::json([
+                'success' => true,
+                'message' => 'Your course has been deleted successfully!',
+                'course' => $course,
+            ], 200);
+        }
+        return Response::json([
+            'success' => false,
+            'message' => 'The required course not found!',
+        ], 404);
+    }
+    private function storeLogo($course)
+    {
+        if (request()->has('logo_url')) {
+            $course->update(['logo_url' => request()->logo_url->store('uploads/courses_logos', 'public')]);
+        }
+    }
+
+
+    private function validateRequest()
+    {
+        return request()->validate([
+            'university_id' => 'required|numeric',
+            'department_id' => 'required|numeric',
+            'name' => 'required|min:3:max:250',
+            'old_price' => 'required|numeric',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'logo_url' => 'sometimes|file|image|max:1000',
+        ]);
     }
 }

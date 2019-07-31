@@ -8,10 +8,13 @@ class Course extends Model
 {
 
 
-    protected $fillable = [
-        'university_id', 'department_id', 'name',  'old_price', 'price', 'description', 'logo_url',
-    ];
+    protected $guarded = [];
 
+    //scopes
+
+
+
+    //relationships
 
     public function user()
     {
