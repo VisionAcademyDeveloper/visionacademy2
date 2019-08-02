@@ -17,7 +17,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        'Symfony\\Component\\HttpKernel\\Exception\\MethodNotAllowedHttpException',
     ];
 
     /**
@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             return response()->json(['message' => 'Not Found'], 404);
         }
-       
+
 
 
 
