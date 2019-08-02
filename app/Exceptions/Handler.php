@@ -7,6 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Prophecy\Exception\Doubler\MethodNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -58,6 +59,9 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => 'Method Not Allowed'], 405);
         }
         if ($exception instanceof MethodNotAllowedException) {
+            return response()->json(['message' => 'Method Not Allowed'], 405);
+        }
+        if ($exception instanceof MethodNotFoundException) {
             return response()->json(['message' => 'Method Not Allowed'], 405);
         }
 
