@@ -57,7 +57,6 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
     Route::post('/course', 'API\Course\CourseController@create')->name('course.post');
     Route::put('/course/{id}/update', 'API\Course\CourseController@update')->name('course.update');
     Route::delete('/course/{id}/delete', 'API\Course\CourseController@delete')->name('course.delete');
-    Route::get('/teacher/courses', 'API\Course\CourseController@getCoursesByLoggedTeacher')->name('course.getByLoggedTeacher');
 });
 
 Route::get('/course/all', 'API\Course\CourseController@getAllCourses')->name('course.getAll');

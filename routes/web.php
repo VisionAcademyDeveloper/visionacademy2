@@ -18,11 +18,8 @@ use App\Chapter;
 
 Route::get('/', function () {
 
-    
-    return Auth::user();
-   
 
-   
+    return Auth::user();
 });
 
 
