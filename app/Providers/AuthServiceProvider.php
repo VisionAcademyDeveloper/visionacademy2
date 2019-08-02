@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 use App\Course;
-use App\Role;
 use App\Policies\CoursePolicy;
 use App\Chapter;
 use App\Policies\ChapterPolicy;
 use App\Policies\LessonPolicy;
+use App\File;
+use App\Policies\FilePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         Course::class => CoursePolicy::class,
         Chapter::class => ChapterPolicy::class,
         Lesson::class => LessonPolicy::class,
+        File::class => FilePolicy::class,
 
 
     ];
@@ -47,5 +49,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add-lesson', 'App\Policies\LessonPolicy@create');
         Gate::define('update-lesson', 'App\Policies\LessonPolicy@update');
         Gate::define('delete-lesson', 'App\Policies\LessonPolicy@delete');
+
+        Gate::define('add-file', 'App\Policies\FilePolicy@create');
+        Gate::define('update-file', 'App\Policies\FilePolicy@update');
+        Gate::define('delete-file', 'App\Policies\FilePolicy@delete');
     }
 }

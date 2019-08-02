@@ -19,7 +19,11 @@ use App\Chapter;
 Route::get('/', function () {
 
 
-    return Auth::user();
+    if (Auth::check())
+        return Auth::user();
+    else {
+        return 'no';
+    }
 });
 
 

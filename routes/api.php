@@ -100,3 +100,22 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher|admin|student']], func
     Route::get('/chapter/{id}/lessons', 'API\Course\LessonController@getLessonsByChapter')->name('lesson.getAll');
     Route::get('/lesson/{id}', 'API\Course\LessonController@getLesson')->name('lesson.get');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| File Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
+
+    Route::post('/file', 'API\File\FileController@add')->name('file.post');
+    Route::put('/file/{id}/update', 'API\File\FileController@update')->name('file.update');
+    Route::delete('/file/{id}/delete', 'API\File\FileController@delete')->name('file.delete');
+});
+
+Route::group(['middleware' => ['auth:api', 'roles:teacher|admin|student']], function () {
+    Route::get('/course/{id}/files', 'API\File\FileController@getFilesByCourse')->name('file.getAll');
+    Route::get('/file/{id}', 'API\File\FileController@getFile')->name('file.get');
+});
