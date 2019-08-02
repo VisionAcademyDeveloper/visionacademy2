@@ -85,7 +85,7 @@ class CourseController extends Controller
 
     public function getCoursesByLoggedTeacher()
     {
-        return $user = auth()->user();
+        return  request();
 
 
         $courses = Course::where('display', 1)->where('user_id', $user->id)->get();
