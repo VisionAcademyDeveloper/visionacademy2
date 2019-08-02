@@ -63,7 +63,7 @@ Route::get('/course/all', 'API\Course\CourseController@getAllCourses')->name('co
 Route::get('/course/{id}', 'API\Course\CourseController@getCourse')->name('course.get');
 Route::get('/department/{id}/courses', 'API\Course\CourseController@getCoursesByDepartment')->name('course.getByDep');
 Route::get('/teacher/{id}/courses', 'API\Course\CourseController@getCoursesByTeacher')->name('course.getByTeacher');
-Route::get('/teacher/courses', 'API\Course\CourseController@getCoursesByLoggedTeacher')->name('course.getByLoggedTeacher');
+Route::get('/teacher/courses', 'API\Course\CourseController@getCoursesByLoggedTeacher')->name('course.getByLoggedTeacher')->middleware('auth:api', 'roles:teacher');
 
 /*
 |--------------------------------------------------------------------------
