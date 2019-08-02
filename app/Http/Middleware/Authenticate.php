@@ -19,9 +19,12 @@ class Authenticate extends Middleware
         //     return route('login');
         // }
 
-        return Response::json([
-            'success' => false,
-            'message' => 'You are authenticated , please login first '
-        ], 401);
+        // return Response::json([
+        //     'success' => false,
+        //     'message' => 'You are un authenticated , please login first '
+        // ], 401);
+
+
+
     }
 }
