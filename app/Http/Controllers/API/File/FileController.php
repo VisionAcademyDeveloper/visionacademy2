@@ -95,7 +95,7 @@ class FileController extends Controller
 
             return Response::json([
                 'success' => false,
-                'message' => "You don't have the right permission to perform this action."
+                'message' => "You don't have the right permission to add a file to this course."
             ], 401);
         }
 
