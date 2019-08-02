@@ -49,7 +49,7 @@ class FilePolicy
      */
     public function update(User $user, File $file)
     {
-        if ($user->id == $file->course->user_id) {
+        if ($user->id === $file->course->user_id) {
             return true;
         }
         return false;

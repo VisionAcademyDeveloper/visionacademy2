@@ -80,7 +80,17 @@ class FileController extends Controller
     public function update(Request $request, $id)
     {
 
+
         $file = File::where('id', $id)->where('display', 1)->first();
+
+        if ($request->user->id != $file->course->user_id) {
+
+            return Response::json([
+                'success' => false,
+                'message' => "You don't have the right permission to perform this action."
+            ], 401);
+        }
+
 
         if ($file) {
 
