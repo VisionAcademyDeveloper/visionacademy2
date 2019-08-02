@@ -14,7 +14,7 @@ class FileController extends Controller
 
     public function getFilesByCourse($id)
     {
-        $files = File::where('course_id', 1)->where('display', 1)->get();
+        $files = File::where('course_id', $id)->where('display', 1)->get();
         return Response::json([
             'success' => true,
             'message' => 'files returned successfully.',
