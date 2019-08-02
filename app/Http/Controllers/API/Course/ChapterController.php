@@ -45,6 +45,15 @@ class ChapterController extends Controller
     public function  create(Request $request)
     {
 
+        if ($request->has('course_id')) {
+            $course = Course::find($request->course_id);
+            if (!$course) {
+                return Response::json([
+                    'success' => false,
+                    'message' => 'The required course not found!',
+                ], 404);
+            }
+        }
 
         if (!Gate::allows('add-chapter', $request->course_id)) {
             return Response::json([
@@ -61,13 +70,6 @@ class ChapterController extends Controller
             'course_id' => $request->course_id
         ]);
 
-        $course = Course::find($request->course_id);
-        if (!$course) {
-            return Response::json([
-                'success' => false,
-                'message' => 'The required course not found!',
-            ], 404);
-        }
         $chapter->save();
         return Response::json([
             'success' => true,
