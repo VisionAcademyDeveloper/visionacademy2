@@ -40,7 +40,7 @@ class ChapterPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function addChapter(User $user, $course_id)
+    public function create(User $user, $course_id)
     {
 
         $course = Course::find($course_id);
@@ -48,7 +48,6 @@ class ChapterPolicy
         if (!$course) {
             return false;
         }
-
 
         if ($course->user_id == $user->id) {
             return true;
@@ -66,7 +65,15 @@ class ChapterPolicy
      */
     public function update(User $user, Chapter $chapter)
     {
-        //
+
+        $course = Course::find($chapter->course_id);
+        if (!$course) {
+            return false;
+        }
+        if ($user->id == $course->user_id) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -78,7 +85,14 @@ class ChapterPolicy
      */
     public function delete(User $user, Chapter $chapter)
     {
-        //
+        $course = Course::find($chapter->course_id);
+        if (!$course) {
+            return false;
+        }
+        if ($user->id == $course->user_id) {
+            return true;
+        }
+        return false;
     }
 
     /**

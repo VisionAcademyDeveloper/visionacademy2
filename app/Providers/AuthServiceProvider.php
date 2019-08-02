@@ -22,7 +22,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Course::class => CoursePolicy::class,
         Chapter::class => ChapterPolicy::class,
-        Role::class => RolePolicy::class,
 
 
     ];
@@ -39,7 +38,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('update-course', 'App\Policies\CoursePolicy@update');
         Gate::define('delete-course', 'App\Policies\CoursePolicy@delete');
-        Gate::define('add-chapter', 'App\Policies\ChapterPolicy@addChapter');
+        Gate::define('add-chapter', 'App\Policies\ChapterPolicy@create');
+        Gate::define('update-chapter', 'App\Policies\ChapterPolicy@update');
+        Gate::define('delete-chapter', 'App\Policies\ChapterPolicy@delete');
 
         //
     }

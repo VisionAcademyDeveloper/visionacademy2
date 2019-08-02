@@ -15,11 +15,14 @@ class CreateChaptersTable extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('course_id');
+            $table->unsignedBigInteger('course_id');
             $table->string('title');
+            $table->string('description')->nullable();
             $table->integer('order')->default(1);
             $table->boolean('display')->default(true);
             $table->timestamps();
+
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

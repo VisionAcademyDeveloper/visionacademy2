@@ -15,12 +15,16 @@ class CourseController extends Controller
     public function create(Request $request)
     {
 
+        //Fixing N + 1 Problem
+        // $request->user()->courses()->create([]);
         $this->validateRequest();
 
         // $image = Image::make(public_path('storage/' . $logo))->fit(400, 400);
         // $image->save();
         //Job for resizing image
-        $course = new Course([
+
+
+        if ($request->user()->courses()->create([
             'university_id' => $request->input('university_id'),
             'department_id' => $request->input('department_id'),
             'name' => $request->input('name'),
@@ -31,10 +35,9 @@ class CourseController extends Controller
             'prerequisites' => $request->input('prerequisites'),
             'classLink' => $request->input('classLink'),
             'classTableInfo' => $request->input('classTableInfo'),
-        ]);
-
-        if ($request->user()->courses()->save($course)) {
-            $this->storeLogo($course);
+        ])) {
+            $course = $request->user()->courses()->latest()->first();
+            $this->storeLogo($course); //should be a job in bg
             return Response::json([
                 'success' => true,
                 'message' => 'Your course has been created successfully!',
@@ -87,6 +90,7 @@ class CourseController extends Controller
 
     public function update(Request $request, $id)
     {
+        //re-write it in modern way
         $course = Course::where('id', $id)->where('display', 1)->first();
 
         if ($course) {

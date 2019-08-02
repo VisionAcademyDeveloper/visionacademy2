@@ -11,9 +11,8 @@ class Chapter extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'title','course_id'
-    ];
+
+    protected $guarded = [];
 
     public function course()
     {
