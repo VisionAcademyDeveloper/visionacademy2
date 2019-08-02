@@ -14,6 +14,24 @@ class FileController extends Controller
 
     public function getFilesByCourse($id)
     {
+
+        $course = Course::where('id', $id)->where('display', 1)->first();
+
+        if (!$course) {
+            return Response::json([
+                'success' => false,
+                'message' => 'The required course not found!',
+            ], 404);
+        }
+        if (auth('api')->user()->id != $course->user_id) {
+
+            return Response::json([
+                'success' => false,
+                'message' => "You don't have the right permission to get files of this course."
+            ], 401);
+        }
+
+
         $files = File::where('course_id', $id)->where('display', 1)->get();
         return Response::json([
             'success' => true,
