@@ -19,8 +19,7 @@ use App\Chapter;
 Route::get('/', function () {
 
     
-    $chapter = Chapter::find(1);
-
+    return Auth::user();
    
 
    
