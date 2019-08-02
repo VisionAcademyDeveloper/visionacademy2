@@ -70,6 +70,31 @@ class CourseController extends Controller
         ], 200);
     }
 
+
+    public function getCoursesByTeacher($id)
+    {
+        $courses = Course::where('display', 1)->where('user_id', $id)->get();
+        return Response::json([
+            'success' => true,
+            'message' => 'courses returned successfully.',
+            'total' => $courses->count(),
+            'courses' => $courses,
+
+        ], 200);
+    }
+
+    public function getCoursesByLoggedTeacher()
+    {
+        $courses = Course::where('display', 1)->where('user_id', request()->user()->id)->get();
+        return Response::json([
+            'success' => true,
+            'message' => 'courses returned successfully.',
+            'total' => $courses->count(),
+            'courses' => $courses,
+
+        ], 200);
+    }
+
     public function getCourse($id)
     {
         $course = Course::where('id', $id)->where('display', 1)->first();

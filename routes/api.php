@@ -62,6 +62,8 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
 Route::get('/course/all', 'API\Course\CourseController@getAllCourses')->name('course.getAll');
 Route::get('/course/{id}', 'API\Course\CourseController@getCourse')->name('course.get');
 Route::get('/department/{id}/courses', 'API\Course\CourseController@getCoursesByDepartment')->name('course.getByDep');
+Route::get('/teacher/{id}/courses', 'API\Course\CourseController@getCoursesByTeacher')->name('course.getByTeacher');
+Route::get('/teacher/courses', 'API\Course\CourseController@getCoursesByLoggedTeacher')->name('course.getByLoggedTeacher');
 
 /*
 |--------------------------------------------------------------------------
