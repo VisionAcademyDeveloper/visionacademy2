@@ -78,3 +78,4 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
 
 Route::get('/course/{id}/chapters', 'API\Course\ChapterController@getAllChapters')->name('chapter.getAll');
 Route::get('/chapter/{id}', 'API\Course\ChapterController@getChapter')->name('chapter.get');
+
