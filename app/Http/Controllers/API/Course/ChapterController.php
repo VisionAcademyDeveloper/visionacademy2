@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Chapter;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
+use App\Course;
 
 class ChapterController extends Controller
 {
