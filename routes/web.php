@@ -21,7 +21,8 @@ Route::get('/', function () {
     
     $chapter = Chapter::find(1);
 
-    return $chapter->course->user_id ;
+   
+
    
 });
 
