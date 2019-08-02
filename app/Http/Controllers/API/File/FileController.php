@@ -83,7 +83,7 @@ class FileController extends Controller
 
         $file = File::where('id', $id)->where('display', 1)->first();
 
-        if ($request->user->id != $file->course->user_id) {
+        if ($request->user()->id != $file->course->user_id) {
 
             return Response::json([
                 'success' => false,
