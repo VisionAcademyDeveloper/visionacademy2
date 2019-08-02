@@ -38,6 +38,9 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json(['message' => 'Method Not Allowed'], 405);
+        }
         parent::report($exception);
     }
     /**
@@ -55,15 +58,8 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             return response()->json(['message' => 'Not Found'], 404);
         }
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            return response()->json(['message' => 'Method Not Allowed'], 405);
-        }
-        if ($exception instanceof MethodNotAllowedException) {
-            return response()->json(['message' => 'Method Not Allowed'], 405);
-        }
-        if ($exception instanceof MethodNotFoundException) {
-            return response()->json(['message' => 'Method Not Allowed'], 405);
-        }
+       
+
 
 
         return parent::render($request, $exception);
