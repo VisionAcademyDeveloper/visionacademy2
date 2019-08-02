@@ -79,3 +79,22 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
 Route::get('/course/{id}/chapters', 'API\Course\ChapterController@getAllChapters')->name('chapter.getAll');
 Route::get('/chapter/{id}', 'API\Course\ChapterController@getChapter')->name('chapter.get');
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Lesson Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => ['auth:api', 'roles:teacher']], function () {
+
+    Route::post('/lesson', 'API\Course\LessonController@create')->name('lesson.post');
+    Route::put('/lesson/{id}/update', 'API\Course\LessonController@update')->name('lesson.update');
+    Route::delete('/lesson/{id}/delete', 'API\Course\LessonController@delete')->name('lesson.delete');
+});
+
+Route::group(['middleware' => ['auth:api', 'roles:teacher|admin|student']], function () {
+    Route::get('/chapter/{id}/lessons', 'API\Course\LessonController@getLessonsByChapter')->name('lesson.getAll');
+    Route::get('/lesson/{id}', 'API\Course\LessonController@getLesson')->name('lesson.get');
+});

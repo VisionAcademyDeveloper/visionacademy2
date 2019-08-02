@@ -3,6 +3,7 @@
 use App\Events\NewUserHasRegisteredEvent;
 use App\Jobs\SendWelcomeEmailJob;
 use App\User;
+use App\Chapter;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,12 @@ use App\User;
 
 Route::get('/', function () {
 
+    
+    $chapter = Chapter::find(1);
 
-
-    return 'hi';
-})->middleware('roles:admin');
+    return $chapter->course->user_id ;
+   
+});
 
 
 Route::get('/pusher', function () {

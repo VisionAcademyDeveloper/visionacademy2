@@ -45,7 +45,7 @@ class ChapterController extends Controller
     public function  create(Request $request)
     {
         $this->validateRequest();
-        $course = Course::find($request->course_id);
+        $course = Course::where('id', $request->course_id)->where('display', 1)->first();
         if (!$course) {
             return Response::json([
                 'success' => false,
@@ -105,7 +105,7 @@ class ChapterController extends Controller
         return Response::json([
             'success' => true,
             'message' => 'Your chapter has been updated successfully!',
-            'course' => $chapter,
+            'chapter' => $chapter,
         ], 200);
     }
 
