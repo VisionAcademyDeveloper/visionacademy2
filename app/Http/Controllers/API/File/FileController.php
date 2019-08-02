@@ -85,6 +85,12 @@ class FileController extends Controller
 
         $course = Course::where('id', $request->course_id)->where('display', $id)->first();
 
+        if (!$course) {
+            return Response::json([
+                'success' => false,
+                'message' => 'The required course not found!',
+            ], 404);
+        }
         if ($request->user()->id != $course->user_id) {
 
             return Response::json([
