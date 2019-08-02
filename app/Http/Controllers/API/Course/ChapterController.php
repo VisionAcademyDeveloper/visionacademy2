@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Chapter;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
-use App\Course;
 
 class ChapterController extends Controller
 {
@@ -44,7 +43,14 @@ class ChapterController extends Controller
 
     public function  create(Request $request)
     {
-
+        $this->validateRequest();
+        $course = Course::find($request->course_id);
+        if (!$course) {
+            return Response::json([
+                'success' => false,
+                'message' => 'The required course not found!',
+            ], 404);
+        }
 
         if (!Gate::allows('add-chapter', $request->course_id)) {
             return Response::json([
@@ -53,7 +59,7 @@ class ChapterController extends Controller
             ], 401);
         }
 
-        $this->validateRequest();
+
 
         $chapter = new Chapter([
             'title' => $request->title,
