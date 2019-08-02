@@ -59,6 +59,17 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => 'Not Found'], 404);
         }
 
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'message' => 'Resource not found.'
+            ], 404);
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json([
+                'message' => 'Method not allowed.'
+            ], 405);
+        }
 
 
 

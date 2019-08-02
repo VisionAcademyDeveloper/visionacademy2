@@ -14,7 +14,6 @@ class FileController extends Controller
 
     public function getFilesByCourse($id)
     {
-
         $course = Course::where('id', $id)->where('display', 1)->first();
 
         if (!$course) {
@@ -30,7 +29,6 @@ class FileController extends Controller
                 'message' => "You don't have the right permission to get files of this course."
             ], 401);
         }
-
 
         $files = File::where('course_id', $id)->where('display', 1)->get();
         return Response::json([
@@ -97,8 +95,6 @@ class FileController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
         $file = File::where('id', $id)->where('display', 1)->first();
 
         $course = Course::where('id', $request->course_id)->where('display', 1)->first();
