@@ -87,7 +87,7 @@ class CourseController extends Controller
     {
 
 
-
+return "test";
         $courses = Course::where('display', 1)->where('user_id', auth('api')->user()->id)->get();
         return Response::json([
             'success' => true,
