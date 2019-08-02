@@ -53,6 +53,11 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             return response()->json(['message' => 'Not Found'], 404);
         }
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json(['message' => 'Method Not Allowed'], 405);
+        }
+
+
         return parent::render($request, $exception);
     }
 }
