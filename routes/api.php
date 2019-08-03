@@ -131,3 +131,23 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher|admin|student']], func
     Route::get('/profile', 'API\Profile\ProfileController@profile')->name('profile.get');
     Route::put('/profile', 'API\Profile\ProfileController@update')->name('profile.update');
 });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Subscription Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => ['auth:api', 'roles:|student']], function () {
+    Route::post('/subscribe', 'API\Subscription\SubscriptionController@subscribe')->name('subscribe.post');
+    Route::post('/unsubscribe', 'API\Subscription\SubscriptionController@unSubscribe')->name('unsubscribe.post');
+    Route::post('/submitReceipt', 'API\Subscription\SubscriptionController@submitReceipt')->name('receipt.submit');
+});
+
+Route::group(['middleware' => ['auth:api', 'roles:|admin']], function () {
+    Route::post('/subscription/confirm', 'API\Subscription\SubscriptionController@confirmSubscription')->name('subscription.confirm');
+    Route::post('/subscription/unconfirm', 'API\Subscription\SubscriptionController@unConfirmSubscription')->name('subscription.unconfirm');
+    Route::post('/subscription/remove', 'API\Subscription\SubscriptionController@removeSubscription')->name('subscription.remove');
+});
