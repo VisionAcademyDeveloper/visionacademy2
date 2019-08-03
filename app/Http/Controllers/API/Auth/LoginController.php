@@ -42,6 +42,7 @@ class LoginController extends Controller
         return Response::json([
             'success' => true,
             'message' => 'You have logged in successfully!',
+            'user_role' => $request->user()->roles()->first()->pivot->role_id,
             'token_data' => json_decode((string) $response->getBody(), true)
         ], 200);
     }

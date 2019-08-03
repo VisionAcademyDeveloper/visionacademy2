@@ -6,8 +6,6 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use Prophecy\Exception\Doubler\MethodNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,7 +21,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var arrayF
      */
     protected $dontFlash = [
         'password',
@@ -38,7 +36,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-       
+
         parent::report($exception);
     }
     /**

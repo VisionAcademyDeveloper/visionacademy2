@@ -119,3 +119,15 @@ Route::group(['middleware' => ['auth:api', 'roles:teacher|admin|student']], func
     Route::get('/course/{id}/files', 'API\File\FileController@getFilesByCourse')->name('file.getAll');
     Route::get('/file/{id}', 'API\File\FileController@getFile')->name('file.get');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| File Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => ['auth:api', 'roles:teacher|admin|student']], function () {
+    Route::get('/profile', 'API\Profile\ProfileController@profile')->name('profile.get');
+    Route::put('/profile', 'API\Profile\ProfileController@update')->name('profile.update');
+});

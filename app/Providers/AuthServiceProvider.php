@@ -12,6 +12,8 @@ use App\Policies\ChapterPolicy;
 use App\Policies\LessonPolicy;
 use App\File;
 use App\Policies\FilePolicy;
+use App\Profile;
+use App\Policies\ProfilePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Chapter::class => ChapterPolicy::class,
         Lesson::class => LessonPolicy::class,
         File::class => FilePolicy::class,
+        Profile::class => ProfilePolicy::class,
 
 
     ];
@@ -53,5 +56,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add-file', 'App\Policies\FilePolicy@create');
         Gate::define('update-file', 'App\Policies\FilePolicy@update');
         Gate::define('delete-file', 'App\Policies\FilePolicy@delete');
+
+        Gate::define('update-profile', 'App\Policies\ProfilePolicy@update');
     }
 }
