@@ -9,7 +9,7 @@ use App\User;
 use App\Profile;
 use GuzzleHttp;
 use App\Events\NewUserHasRegisteredEvent;
-
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -44,7 +44,9 @@ class RegisterController extends Controller
                 ],
             ]);
 
+            $role_teacher = Role::where('name', 'Teacher')->first();
             // event(new NewUserHasRegisteredEvent($user));
+            $user->roles()->attach($role_teacher);
 
             return Response::json([
                 'success' => true,
